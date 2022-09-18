@@ -1,28 +1,22 @@
-start=100
-trails=100
-goal=200
-bets=1
-wins=0
-for (( t=0; t<trials; t++ ))
+money=100
+bet_amount=1
+bet_count=0
+won_count=0
+while(( money != 0 && money != 200 ))
 do
-cash=$start
-while [[ $cash -gt 0 && $cash -lt $goal ]]
- do
- ((bets++))
- choice=$((RANDOM%2))
- if [ $choice -eq 0 ]
- then
- ((cash++))
- else
- ((cash--))
- fi
+    echo -n "The bet is "
+    bet=$(( RANDOM % 2 ))
+    if ((bet == 1))
+    then
+        echo "won"
+        (( money += bet_amount ))
+        (( won_count++))
+    else
+        echo "lost"
+        ((money -= bet_amount ))
+    fi
+    (( bet_count++ ))
+    
 done
-if [ $cash -eq $goal ]
-then
-echo "Gambler reaches the goal"
-else echo "No more Money"
-((wins++))
-fi
-done
-echo "Rs"$wins,"won number of" $bets " bets made"
-
+echo "The final money is $money"
+echo "No of bets made are $bet_count and no of times won are $won_count"
